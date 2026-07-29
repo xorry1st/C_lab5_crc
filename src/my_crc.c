@@ -1,5 +1,3 @@
-#include <stdint.h>
-
 #include "my_crc.h"
 
 #define POLY 0x31       // порождающий полином 0011 0001
@@ -12,9 +10,10 @@ uint8_t crc8_calc(uint8_t * payload, char datalen){
     uint8_t buf = *payload;     // буфер для байта нагрузки (чтобы не изменять исходные данные)
     while(datalen--){
         static char shifted_bit = 0;
-        shifted_bit = (res_crc & 0x80) >> (WIDTH - 1);      // достаем бит, который будет выдвинут при сдвиге
+        shifted_bit = res_crc >> (WIDTH - 1);      // достаем бит, который будет выдвинут при сдвиге
         res_crc = (res_crc << 1) | (buf >> 7);     // двигаем влево регистр crc + добавляем один бит из полезной нагрузки
-        res_crc = shifted_bit ^ ()
+        shifted_bit ? res_crc ^= POLY : res_crc;
     }
+    return res_crc;
 //------------------------------------------
 }
