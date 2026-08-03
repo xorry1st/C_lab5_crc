@@ -4,9 +4,25 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "echo",
+            "label": "build",
             "type": "shell",
-            "command": "echo Hello"
+            "command": "make",
+            "args": ["-f", "Makefile.txt"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$gcc",
+            "dependsOn":["clean"],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "make",
+            "args": ["-f", "Makefile.txt", "clean"],
+            "problemMatcher": [],
+            "group": "none"
         }
     ]
 }
