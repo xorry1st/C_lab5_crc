@@ -11,9 +11,9 @@ uint8_t crc8_calc(uint8_t * payload, char datalen){
     char shifted_bit = 0;
     while(datalen--){
         shifted_bit = res_crc >> (WIDTH - 1);      // достаем бит, который будет выдвинут при сдвиге
-        res_crc = (res_crc << 1) | (buf >> 7);     // двигаем влево регистр crc + добавляем один бит из полезной нагрузки
+        res_crc = ((res_crc << 1) & 0xFF) | (buf >> 7);     // двигаем влево регистр crc + добавляем один бит из полезной нагрузки
         if (shifted_bit) res_crc ^= POLY;
-        buf = buf << 1;
+        buf = (buf << 1) & 0xFF;
     }
     return res_crc;
 //------------------------------------------
